@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Menu from './pages/Menu'
 import './global.css';
 import CustomThemeProvider from './Theme';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 
@@ -13,7 +13,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <CustomThemeProvider>
-        <Login />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/menu" element={<Menu />} />
+        </Routes>
       </CustomThemeProvider>
     </BrowserRouter>
   </React.StrictMode >

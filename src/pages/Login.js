@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Card, CardContent, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 import '../partials/_login.scss';
 
 function Login() {
@@ -8,6 +9,7 @@ function Login() {
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState(false);
 
 
     /*     const handleSubmit = async (e) => {
@@ -35,10 +37,14 @@ function Login() {
         const senhaSimulada = '123';
 
         if (usuario === usuarioSimulado && senha === senhaSimulada) {
+            setLoggedIn(true);
             navigate('/Menu');
         } else {
             alert('Credenciais inválidas');
         }
+    }
+    if (loggedIn) {
+        return <useNavigate to="/Menu" />;
     }
 
     return (
