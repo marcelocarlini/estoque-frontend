@@ -1,27 +1,24 @@
-import React from 'react'
+import React from 'react';
+import { Box, Button, Card, CardContent, TextField } from '@mui/material';
+import '../partials/_login.scss'; // Importe o arquivo de estilos
 
-
-export default function login() {
+function Login() {
     return (
-        <div className='page-container'>
-            <div className='container'>
-                <form>
-                    <h1>Login</h1>
-                    <div>
-                        <input placeholder="Email" type='email' />
-                        <img width="20" height="20" src="https://img.icons8.com/ios/50/user--v1.png" alt="user--v1" />
+        <Box className="custom-box">
+            <Card className="custom-card" >
+                <CardContent>
+                    <div className="custom-title">LOGIN</div>
+                    <div className="custom-input">
+                        <TextField id="outlined-basic" type='text' label="Usuário" variant="outlined" />
+                        <TextField id="outlined-basic" type='password' label="Senha" variant="outlined" />
+                        <div>
+                            <Button className="custom-button" variant="contained" >Entrar</Button>
+                        </div>
                     </div>
-                    <div>
-                        <input placeholder='Senha' type='password' />
-                        <img width="20" height="20" src="https://img.icons8.com/ios/50/lock--v1.png" alt="lock--v1" />
-                        <a href='#'>Esqueci minha senha</a>
-                    </div>
-                    <button type='submit'>Entrar</button>
-                    <div>
-                        <p>Não esta cadastrado ? <a href='#'>Cadastrar</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </CardContent>
+            </Card>
+        </Box>
     )
 }
+
+export default Login;
