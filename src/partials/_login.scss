@@ -1,4 +1,4 @@
-@import "./colors";
+@import "./_colors";
 
 .custom-box{
     display: flex;
@@ -11,21 +11,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 450px;
+    height: 380px;
 }
+
 .custom-title{
     font-size: 40px;
     font-weight: bold;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
+    color: $primaryNormal;
     
 }
 .custom-input {
     display: flex;
     flex-direction: column;
-    margin: 40px;
-    padding-top: 10px;
-
+    margin: 30px;
     & > :first-child {
         margin-bottom: 30px; 
     }
@@ -38,6 +38,8 @@
     margin: auto !important;
     width: 50% ;
     margin-top: 40px !important;
+    font-family: "Poppins", sans-serif !important; 
+
 }
 .custom-button:hover{
     animation: scaleButton 0.8s alternate infinite;
