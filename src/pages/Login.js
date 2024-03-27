@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Card, CardContent, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Importe a biblioteca Axios
 
 import '../partials/_login.scss';
 
@@ -11,38 +12,26 @@ function Login() {
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useState(false);
 
-
-    /*     const handleSubmit = async (e) => {
-            e.preventDefault();
-            try {
-                const response = await axios.post("Inserir.url/login", {
-                    usuario,
-                    senha
-                });
-    
-                if (response.data.sucess) {
-                    history.push('/menu');
-                } else {
-                    alert('Credenciais inválidas');
-                }
-            } catch (error) {
-                alert('Erro de login');
-            }
-        } */
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Simulação de usuário e senha
-        const usuarioSimulado = 'marcelo';
-        const senhaSimulada = '123';
+        try {
+            const response = await axios.post("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/login", { // Substitua "http://localhost:3000" pelo endereço do seu backend
+                usuario,
+                senha
+            });
 
-        if (usuario === usuarioSimulado && senha === senhaSimulada) {
-            setLoggedIn(true);
-            navigate('/Menu');
-        } else {
-            alert('Credenciais inválidas');
+            if (response.data.success) {
+                setLoggedIn(true);
+                navigate('/Menu');
+            } else {
+                alert('Credenciais inválidas');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Erro de login');
         }
     }
+
     if (loggedIn) {
         return <useNavigate to="/Menu" />;
     }
