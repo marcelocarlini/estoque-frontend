@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, CardContent, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Importe a biblioteca Axios
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '../partials/_login.scss';
 
@@ -18,14 +20,19 @@ function Login() {
                 senha
             });
 
-            if (response.data.success) {
-                navigate('/Menu'); // Redireciona para a página de menu após o login bem-sucedido
+            if (response.data.response.success == true) {
+                toast.success("Login bem-sucedido",
+                    {
+                        autoClose: 1000,
+                    });
+                setTimeout(() => {
+                    navigate('/Menu');
+                }, 2000);
             } else {
-                alert('Credenciais inválidas');
+                toast.error('Credenciais inválidas');
             }
         } catch (error) {
-            console.error(error);
-            alert('Erro de login');
+            toast.error('Erro de login');
         }
     }
 
@@ -45,6 +52,7 @@ function Login() {
                     </form>
                 </CardContent>
             </Card>
+            <ToastContainer />
         </Box>
     )
 }
