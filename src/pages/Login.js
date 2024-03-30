@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, CardContent, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Importe a biblioteca Axios
@@ -6,23 +6,20 @@ import axios from 'axios'; // Importe a biblioteca Axios
 import '../partials/_login.scss';
 
 function Login() {
-
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/login", { // Substitua "http://localhost:3000" pelo endereço do seu backend
+            const response = await axios.post("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/login", {
                 usuario,
                 senha
             });
 
             if (response.data.success) {
-                setLoggedIn(true);
-                navigate('/Menu');
+                navigate('/Menu'); // Redireciona para a página de menu após o login bem-sucedido
             } else {
                 alert('Credenciais inválidas');
             }
@@ -30,10 +27,6 @@ function Login() {
             console.error(error);
             alert('Erro de login');
         }
-    }
-
-    if (loggedIn) {
-        return <useNavigate to="/Menu" />;
     }
 
     return (
@@ -57,3 +50,4 @@ function Login() {
 }
 
 export default Login;
+
