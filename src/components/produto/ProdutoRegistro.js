@@ -17,6 +17,17 @@ function ProdutoRegistro(props) {
     { id: 4, status: 'RETORNO' },
   ];
 
+  const modeloOptions = [
+    { id: 1, modelo: 'DELL 3090' },
+    { id: 2, modelo: 'DELL 7010' },
+    { id: 3, modelo: 'BEELINK T4 PRO' },
+    { id: 4, modelo: 'BEELINK I5' },
+    { id: 5, modelo: 'EVEREX I3' },
+    { id: 6, modelo: 'EVEREX I5' },
+    { id: 7, modelo: 'EVEREX I7' },
+    { id: 8, modelo: 'MITSUSHIBA' },
+  ];
+
   React.useEffect(() => {
     axios.get("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/listar-categorias").then(
       r => {
@@ -28,7 +39,7 @@ function ProdutoRegistro(props) {
   function cadastroProduto() {
 
     axios.post("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/cadastro-equipamento", {
-      "modelo": modelo,
+      "modelo": modeloOptions.find(s => s.id === modelo).modelo,
       "n_serie": n_serie,
       "patrimonio": patrimonio,
       "categoria": categoria,
@@ -48,7 +59,20 @@ function ProdutoRegistro(props) {
         <CardContent>
           <div style={{ fontSize: "18px", fontWeight: "bold" }}>{props.texto}</div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <TextField value={modelo} onChange={(e) => { setModelo(e.target.value.toUpperCase()) }} style={{ marginTop: "10px" }} id="outlined-basic" label="Modelo" variant="outlined" />
+            <FormControl style={{ marginTop: "10px" }} fullWidth>
+              <InputLabel id="modelo-label">Modelo</InputLabel>
+              <Select
+                labelId="modelo-label"
+                id="modelo-select"
+                value={modelo}
+                label="Modelo"
+                onChange={(e) => { setModelo(e.target.value) }}
+              >
+                {modeloOptions.map(s => (
+                  <MenuItem value={s.id}>{s.modelo}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField value={n_serie} onChange={(e) => { setN_serie(e.target.value.toUpperCase()) }} style={{ marginTop: "10px" }} id="outlined-basic" label="Numero de Série" variant="outlined" />
             <TextField value={patrimonio} onChange={(e) => { setPatrimonio(e.target.value.toUpperCase()) }} style={{ marginTop: "10px" }} id="outlined-basic" label="Patrimonio" variant="outlined" />
             <FormControl style={{ marginTop: "10px" }} fullWidth>

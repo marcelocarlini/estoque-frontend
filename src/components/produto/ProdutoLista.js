@@ -16,9 +16,9 @@ function EquipLista(props) {
   }, [])
 
   return (
-    <div style={{ marginTop: 100 }} >
+    <div style={{ marginTop: 100 }}>
       <h4 style={{ fontSize: "18px", fontWeight: "bold" }}>{props.texto}</h4>
-      <TableContainer className='custom-card' component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -44,8 +44,9 @@ function EquipLista(props) {
             ))}
           </TableBody>
         </Table>
-      </TableContainer></ div >
+      </TableContainer></div >
   )
 }
+
 
 export default EquipLista

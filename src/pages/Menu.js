@@ -23,7 +23,7 @@ import CategoriaLista from '../components/categoria/CategoriaLista';
 import { Container } from '@mui/material';
 import { Add, AddLink, Category, ViewList } from '@mui/icons-material';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -85,29 +85,23 @@ export default function Menu() {
 
     function seletorDeComponentes() {
         if (visivel === 1) {
-            return <ProdutoRegistro texto={"Componente de cadastro de produtos"} />
+            return <ProdutoRegistro texto={"Cadastro de produtos"} />
         } else if (visivel === 2) {
-            return <ProdutoLista texto={"Componente de lista de produtos"} />
+            return <ProdutoLista texto={"Lista de produtos"} />
         } else if (visivel === 3) {
-            return <CategoriaRegistro texto={"Componente de cadastro de categoria"} />
+            return <CategoriaRegistro texto={"Cadastro de categoria"} />
         } else {
-            return <CategoriaLista texto={"Componente de lista de categoria"} />
+            return <CategoriaLista texto={"Lista de categoria"} />
         }
     }
 
     return (
         <Box sx={{ display: 'flex' }}>
-
-
             <CssBaseline />
-
-
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed" open={open} >
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '30px' }}>
                     <img src="https://neooh.com.br/wp-content/themes/neooh/assets/img/logo-white.svg" alt="Logo NEOOH" style={{ width: 300 }} />
                 </div>
-
-
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -118,7 +112,6 @@ export default function Menu() {
                     >
                         <MenuIcon />
                     </IconButton>
-
                     <Typography variant="h6" noWrap component="div">
                         Gerenciador de Equipamentos - TI
                     </Typography>
@@ -149,35 +142,35 @@ export default function Menu() {
                             <ListItemIcon>
                                 <AddLink />
                             </ListItemIcon>
-                            <ListItemText primary={"ProdutoRegistro"} />
+                            <ListItemText primary={"Cadastro de Equipamentos"} />
                         </ListItemButton>
                     </ListItem>
-                    <Divider />
                     <ListItem onClick={() => { setVisivel(2) }} key={2} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Add />
                             </ListItemIcon>
-                            <ListItemText primary={"ProdutoLista"} />
+                            <ListItemText primary={"Lista de Equipamentos"} />
                         </ListItemButton>
                     </ListItem>
+                    <Divider />
                     <ListItem onClick={() => { setVisivel(3) }} key={3} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <ViewList />
                             </ListItemIcon>
-                            <ListItemText primary={"CategoriaRegistro"} />
+                            <ListItemText primary={"Cadastro de Categorias"} />
                         </ListItemButton>
                     </ListItem>
-                    <Divider />
                     <ListItem onClick={() => { setVisivel(4) }} key={4} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Category />
                             </ListItemIcon>
-                            <ListItemText primary={"CategoriaLista "} />
+                            <ListItemText primary={"Lista de Categorias "} />
                         </ListItemButton>
                     </ListItem>
+                    <Divider />
                 </List>
             </Drawer>
             <Main open={open}>
