@@ -16,12 +16,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ProdutoRegistro from '../components/produto/ProdutoRegistro';
-import ProdutoLista from '../components/produto/ProdutoLista';
-import CategoriaRegistro from '../components/categoria/CategoriaRegistro';
-import CategoriaLista from '../components/categoria/CategoriaLista';
-import { Container } from '@mui/material';
-import { Add, AddLink, Category, ViewList } from '@mui/icons-material';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
 const drawerWidth = 240;
 
@@ -70,10 +66,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function Menu() {
+export default function MenuDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [visivel, setVisivel] = React.useState(1)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -83,31 +78,10 @@ export default function Menu() {
         setOpen(false);
     };
 
-    function seletorDeComponentes() {
-        if (visivel === 1) {
-            return <ProdutoRegistro texto={"Componente de cadastro de produtos"} />
-        } else if (visivel === 2) {
-            return <ProdutoLista texto={"Componente de lista de produtos"} />
-        } else if (visivel === 3) {
-            return <CategoriaRegistro texto={"Componente de cadastro de categoria"} />
-        } else {
-            return <CategoriaLista texto={"Componente de lista de categoria"} />
-        }
-    }
-
     return (
         <Box sx={{ display: 'flex' }}>
-
-
             <CssBaseline />
-
-
             <AppBar position="fixed" open={open}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '30px' }}>
-                    <img src="https://neooh.com.br/wp-content/themes/neooh/assets/img/logo-white.svg" alt="Logo NEOOH" style={{ width: 300 }} />
-                </div>
-
-
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -118,9 +92,8 @@ export default function Menu() {
                     >
                         <MenuIcon />
                     </IconButton>
-
                     <Typography variant="h6" noWrap component="div">
-                        Gerenciador de Equipamentos - TI
+                        Gerenciador de Equipamentos
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -144,50 +117,60 @@ export default function Menu() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    <ListItem onClick={() => { setVisivel(1) }} key={1} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <AddLink />
-                            </ListItemIcon>
-                            <ListItemText primary={"ProdutoRegistro"} />
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider />
-                    <ListItem onClick={() => { setVisivel(2) }} key={2} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <Add />
-                            </ListItemIcon>
-                            <ListItemText primary={"ProdutoLista"} />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem onClick={() => { setVisivel(3) }} key={3} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <ViewList />
-                            </ListItemIcon>
-                            <ListItemText primary={"CategoriaRegistro"} />
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider />
-                    <ListItem onClick={() => { setVisivel(4) }} key={4} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <Category />
-                            </ListItemIcon>
-                            <ListItemText primary={"CategoriaLista "} />
-                        </ListItemButton>
-                    </ListItem>
+                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem key={text} disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
+                <List>
+                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                        <ListItem key={text} disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
                 </List>
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <Container>
-                    {
-                        seletorDeComponentes()
-                    }
-                </Container>
-
+                <Typography paragraph>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
+                    enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
+                    imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
+                    Convallis convallis tellus id interdum velit laoreet id donec ultrices.
+                    Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
+                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
+                    nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
+                    leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
+                    feugiat vivamus at augue. At augue eget arcu dictum varius duis at
+                    consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
+                    sapien faucibus et molestie ac.
+                </Typography>
+                <Typography paragraph>
+                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
+                    eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
+                    neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
+                    tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
+                    sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
+                    tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
+                    gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
+                    et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
+                    tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+                    eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+                    posuere sollicitudin aliquam ultrices sagittis orci a.
+                </Typography>
             </Main>
         </Box>
     );

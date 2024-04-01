@@ -25,7 +25,7 @@
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
-  color: #AB04D9;
+  color: #ab04d9;
 }
 
 .custom-input {
@@ -41,7 +41,7 @@
   display: flex !important;
   align-items: center;
   justify-content: center;
-  background-color: #AB04D9 !important;
+  background-color: #ab04d9 !important;
   margin: auto !important;
   width: 50%;
   margin-top: 40px !important;
@@ -66,4 +66,5 @@ body {
   height: 100vh;
   position: relative;
   background-color: #360259;
-}/*# sourceMappingURL=global.css.map */
+  color: #fff;
+} /*# sourceMappingURL=global.css.map */

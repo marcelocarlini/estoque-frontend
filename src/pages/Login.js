@@ -20,7 +20,7 @@ function Login() {
                 senha
             });
 
-            if (response.data.response.success == true) {
+            if (response.data.response.success === true) {
                 toast.success("Login bem-sucedido",
                     {
                         autoClose: 1000,
