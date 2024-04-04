@@ -1,6 +1,8 @@
 import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField, Box } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ProdutoRegistro(props) {
   const [modelo, setModelo] = React.useState("")
@@ -38,6 +40,11 @@ function ProdutoRegistro(props) {
 
   function cadastroProduto() {
 
+    if (!modelo || !n_serie || !patrimonio || !categoria || !status) {
+      toast.warn('Por favor, preencha todos os campos');
+      return;
+    }
+
     axios.post("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/cadastro-equipamento", {
       "modelo": modeloOptions.find(s => s.id === modelo).modelo,
       "n_serie": n_serie,
@@ -45,7 +52,10 @@ function ProdutoRegistro(props) {
       "categoria": categoria,
       "status": statusOptions.find(s => s.id === status).status
     }).then(r => {
-      alert("Produto foi cadastrado")
+
+      toast.success("Produto foi cadastrado", {
+        autoClose: 1000,
+      })
       setModelo("");
       setN_serie("");
       setPatrimonio("");
@@ -109,6 +119,8 @@ function ProdutoRegistro(props) {
           </div>
         </CardContent>
       </Card>
+      <ToastContainer
+        pauseOnHover={false} />
     </Box>
   )
 }

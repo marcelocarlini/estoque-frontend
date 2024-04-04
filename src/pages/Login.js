@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, CardContent, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Importe a biblioteca Axios
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -52,7 +52,8 @@ function Login() {
                     </form>
                 </CardContent>
             </Card>
-            <ToastContainer />
+            <ToastContainer
+                pauseOnHover={false} />
         </Box>
     )
 }
