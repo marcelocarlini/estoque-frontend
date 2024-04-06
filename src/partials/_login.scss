@@ -4,6 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (max-width: 768px) {
+        width: 80%; /* Ajustando a largura para ocupar 80% da largura da tela */
+        height: auto; /* Permitindo altura automática para acomodar o conteúdo */
+    }
 }
 
 .custom-card {
