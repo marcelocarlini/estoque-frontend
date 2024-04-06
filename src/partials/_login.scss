@@ -1,57 +1,57 @@
 @import "./_colors";
 
-.custom-box {
+.custom-box{
     display: flex;
     align-items: center;
     justify-content: center;
-    @media (max-width: 768px) {
-        width: 80%; /* Ajustando a largura para ocupar 80% da largura da tela */
-        height: auto; /* Permitindo altura automática para acomodar o conteúdo */
-    }
 }
-
-.custom-card {
+.custom-card{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: auto;
-    @media (max-width: 768px) {
-        width: 80%; /* Ajustando a largura para ocupar 80% da largura da tela */
-        height: auto; /* Permitindo altura automática para acomodar o conteúdo */
-    }
+    width: 300px;
+  
 }
 
-.custom-title {
+.custom-title{
     font-size: 40px;
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
+    color: $primaryNormal;
+    
 }
-
 .custom-input {
     display: flex;
     flex-direction: column;
-    margin: 30px;
+    width: 100%;
+    padding: 15px;
     & > :first-child {
-        margin-bottom: 30px;
+        margin-bottom: 30px; 
     }
 }
-
 .custom-button {
     display: flex !important;
-    align-items: center;
-    justify-content: center;
+    align-items: center ;
+    justify-content: center ;
+    background-color: $primaryNormal !important;
     margin: auto !important;
-    width: 50%;
-    margin-top: 40px !important;
-    font-family: "Poppins", sans-serif !important;
-    @media (max-width: 768px) {
-        width: 100%; /* Ajustando a largura para ocupar 100% da largura disponível */
-    }
-}
+    width: 60% ;
+    margin-top: 30px !important;
+    font-family: "Poppins", sans-serif !important; 
 
-.custom-button:hover {
-    animation: scaleButton 0.8s alternate;
+}
+.custom-button:hover{
+    animation: scaleButton 0.8s alternate infinite;
+}
+@keyframes scaleButton{
+    from{
+        transform: scale(1);
+
+    }
+    to{
+        transform: scale(1.07);
+
+    }
 }

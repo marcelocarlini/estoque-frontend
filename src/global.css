@@ -16,8 +16,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 380px;
+  width: 300px;
 }
 
 .custom-title {
@@ -31,7 +30,8 @@
 .custom-input {
   display: flex;
   flex-direction: column;
-  margin: 30px;
+  width: 100%;
+  padding: 15px;
 }
 .custom-input > :first-child {
   margin-bottom: 30px;
@@ -43,8 +43,8 @@
   justify-content: center;
   background-color: #AB04D9 !important;
   margin: auto !important;
-  width: 50%;
-  margin-top: 40px !important;
+  width: 60%;
+  margin-top: 30px !important;
   font-family: "Poppins", sans-serif !important;
 }
 
