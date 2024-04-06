@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 function EquipLista(props) {
   const [rows, setRows] = useState([]);
-  const [statusFiltro, setStatusFiltro] = useState('Todos'); // Definindo 'Todos' como o estado inicial
+  const [statusFiltro, setStatusFiltro] = useState('Todos');
+  const [modeloFiltro, setModeloFiltro] = useState('Todos');
   const [totalPorStatus, setTotalPorStatus] = useState({});
 
   useEffect(() => {
@@ -32,43 +33,81 @@ function EquipLista(props) {
     setStatusFiltro(selectedStatus);
   };
 
+  const handleModeloChange = (event) => {
+    const selectedModelo = event.target.value;
+    setModeloFiltro(selectedModelo);
+  };
+
   const totalPorStatusTexto = (status) => {
+    let total = 0;
     if (status === "Todos") {
-      let total = 0;
       Object.values(totalPorStatus).forEach(value => {
         total += value;
       });
-      return total;
+    } else {
+      const filtroStatus = rows.filter(row => row.status === status && (modeloFiltro === "Todos" || row.modelo === modeloFiltro));
+      total = filtroStatus.length;
     }
-    return totalPorStatus[status] || 0;
+    return total;
   };
 
-  const filtro = statusFiltro === "Todos" ? rows : rows.filter(row => row.status === statusFiltro);
+  const modelosUnicos = [...new Set(rows.map(row => row.modelo))];
+
+  const filtro = rows.filter(row => {
+    if (statusFiltro !== "Todos" && row.status !== statusFiltro) {
+      return false;
+    }
+    if (modeloFiltro !== "Todos" && row.modelo !== modeloFiltro) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <div style={{ marginTop: 100 }}>
       <h4 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: '20px' }}>{props.texto}</h4>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-        <FormControl style={{ flex: 1, marginRight: '20px' }}>
-          <InputLabel id="status-filter-label">Status</InputLabel>
-          <Select
-            labelId="status-filter"
-            id="status-filter"
-            value={statusFiltro}
-            label="Status"
-            onChange={handleStatusChange}
-            sx={{
-              width: '140px',
-              marginBottom: '10px'
-            }}
-          >
-            <MenuItem value="Todos">Todos</MenuItem>
-            <MenuItem value="EM USO">Em uso</MenuItem>
-            <MenuItem value="DISPONÍVEL">Disponível</MenuItem>
-            <MenuItem value="BAIXA">Baixa</MenuItem>
-            <MenuItem value="RETORNO">Retorno</MenuItem>
-          </Select>
-        </FormControl>
+        <div style={{ display: 'flex', flex: 1 }}>
+          <FormControl style={{ marginRight: '20px' }}>
+            <InputLabel id="status-filter-label">Status</InputLabel>
+            <Select
+              labelId="status-filter"
+              id="status-filter"
+              value={statusFiltro}
+              label="Status"
+              onChange={handleStatusChange}
+              sx={{
+                width: '140px',
+                marginBottom: '10px'
+              }}
+            >
+              <MenuItem value="Todos">Todos</MenuItem>
+              <MenuItem value="EM USO">Em uso</MenuItem>
+              <MenuItem value="DISPONÍVEL">Disponível</MenuItem>
+              <MenuItem value="BAIXA">Baixa</MenuItem>
+              <MenuItem value="RETORNO">Retorno</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel id="modelo-filter-label">Modelo</InputLabel>
+            <Select
+              labelId="modelo-filter"
+              id="modelo-filter"
+              value={modeloFiltro}
+              label="Modelo"
+              onChange={handleModeloChange}
+              sx={{
+                width: '140px',
+                marginBottom: '10px'
+              }}
+            >
+              <MenuItem value="Todos">Todos</MenuItem>
+              {modelosUnicos.map(modelo => (
+                <MenuItem key={modelo} value={modelo}>{modelo}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
         {statusFiltro && (
           <Typography style={{ marginTop: '10px' }}>
             Total de equipamentos: {totalPorStatusTexto(statusFiltro)}
