@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover;
+    height: 400px;
 }
 .custom-card{
     position: absolute;
@@ -12,7 +12,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    background-size: cover;
   
 }
 
