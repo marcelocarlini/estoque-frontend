@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 function EquipLista(props) {
   const [rows, setRows] = useState([]);
-  const [statusFiltro, setStatusFiltro] = useState('');
+  const [statusFiltro, setStatusFiltro] = useState('Todos'); // Definindo 'Todos' como o estado inicial
   const [totalPorStatus, setTotalPorStatus] = useState({});
 
   useEffect(() => {
@@ -28,13 +28,22 @@ function EquipLista(props) {
   }, [rows]);
 
   const handleStatusChange = (event) => {
-    setStatusFiltro(event.target.value);
+    const selectedStatus = event.target.value;
+    setStatusFiltro(selectedStatus);
   };
+
   const totalPorStatusTexto = (status) => {
+    if (status === "Todos") {
+      let total = 0;
+      Object.values(totalPorStatus).forEach(value => {
+        total += value;
+      });
+      return total;
+    }
     return totalPorStatus[status] || 0;
   };
 
-  const filtro = statusFiltro ? rows.filter(row => row.status === statusFiltro) : rows;
+  const filtro = statusFiltro === "Todos" ? rows : rows.filter(row => row.status === statusFiltro);
 
   return (
     <div style={{ marginTop: 100 }}>
@@ -53,7 +62,7 @@ function EquipLista(props) {
               marginBottom: '10px'
             }}
           >
-            <MenuItem value="">Todos</MenuItem>
+            <MenuItem value="Todos">Todos</MenuItem>
             <MenuItem value="EM USO">Em uso</MenuItem>
             <MenuItem value="DISPONÍVEL">Disponível</MenuItem>
             <MenuItem value="BAIXA">Baixa</MenuItem>
@@ -62,11 +71,10 @@ function EquipLista(props) {
         </FormControl>
         {statusFiltro && (
           <Typography style={{ marginTop: '10px' }}>
-            Total de players: {totalPorStatusTexto(statusFiltro)}
+            Total de equipamentos: {totalPorStatusTexto(statusFiltro)}
           </Typography>
         )}
       </div>
-
 
       <TableContainer component={Paper} sx={{ marginTop: '10px' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
