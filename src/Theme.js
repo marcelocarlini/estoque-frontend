@@ -5,13 +5,13 @@ import { primaryNormal, primaryLight, primaryDark, blackNormal, blackLight, whit
 const theme = createTheme({
     palette: {
         primary: {
-            main: primaryNormal
+            main: primaryDark
         },
         primaryLight: {
             main: primaryLight
         },
         primaryDark: {
-            main: primaryDark
+            main: primaryNormal
         },
         black: {
             normal: blackNormal,

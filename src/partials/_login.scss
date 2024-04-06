@@ -12,6 +12,11 @@
     transform: translate(-50%, -50%);
     width: 400px;
     height: 380px;
+    @media (max-width: 600px) { // Adicionando media query para dispositivos móveis
+        width: 80%; // Ajustando a largura para ocupar 80% da largura da tela
+        height: auto; // Permitindo altura automática para acomodar o conteúdo
+        padding: 20px; // Adicionando preenchimento para espaçamento interno
+    }
 }
 
 .custom-title{
@@ -19,7 +24,6 @@
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
-    color: $primaryNormal;
     
 }
 .custom-input {
@@ -34,11 +38,13 @@
     display: flex !important;
     align-items: center ;
     justify-content: center ;
-    background-color: $primaryNormal !important;
     margin: auto !important;
     width: 50% ;
     margin-top: 40px !important;
     font-family: "Poppins", sans-serif !important; 
+    @media (max-width: 600px) { // Adicionando media query para dispositivos móveis
+        width: 100%; // Ajustando a largura para ocupar 100% da largura disponível
+    }
 
 }
 .custom-button:hover{

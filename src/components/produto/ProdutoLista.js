@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import '../../partials/_produtolista.scss'
 
-function EquipLista(props) {
+function ProdutoLista(props) {
   const [rows, setRows] = useState([]);
   const [statusFiltro, setStatusFiltro] = useState('Todos');
   const [modeloFiltro, setModeloFiltro] = useState('Todos');
@@ -64,10 +65,10 @@ function EquipLista(props) {
   });
 
   return (
-    <div style={{ marginTop: 100 }}>
-      <h4 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: '20px' }}>{props.texto}</h4>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', flex: 1 }}>
+    <div className="produto-lista-container">
+      <h4 className="produto-lista-title">{props.texto}</h4>
+      <div className="produto-filtros">
+        <div className="produto-filtro">
           <FormControl style={{ marginRight: '20px' }}>
             <InputLabel id="status-filter-label">Status</InputLabel>
             <Select
@@ -114,33 +115,32 @@ function EquipLista(props) {
           </Typography>
         )}
       </div>
-
-      <TableContainer component={Paper} sx={{ marginTop: '10px' }}>
+      <TableContainer component={Paper} className="produto-tabela">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Modelo</TableCell>
-              <TableCell align="right">Numero de Série</TableCell>
-              <TableCell align="right">Patrimonio</TableCell>
-              <TableCell align="right">Categoria</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell className="produto-tabela-header">Modelo</TableCell>
+              <TableCell className="produto-tabela-header" align="right">Numero de Série</TableCell>
+              <TableCell className="produto-tabela-header" align="right">Patrimonio</TableCell>
+              <TableCell className="produto-tabela-header" align="right">Categoria</TableCell>
+              <TableCell className="produto-tabela-header" align="right">Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filtro.map((row) => (
+            {filtro.slice().reverse().map((row) => (
               <TableRow key={row.id}>
-                <TableCell component="th" scope="row"> {row.modelo.toUpperCase()}</TableCell>
-                <TableCell align="right">{row.n_serie}</TableCell>
-                <TableCell align="right">{row.patrimonio.toUpperCase()}</TableCell>
-                <TableCell align="right">{row.nome}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
+                <TableCell component="th" scope="row" className="produto-item">{row.modelo.toUpperCase()}</TableCell>
+                <TableCell align="right" className="produto-item">{row.n_serie}</TableCell>
+                <TableCell align="right" className="produto-item">{row.patrimonio.toUpperCase()}</TableCell>
+                <TableCell align="right" className="produto-item">{row.nome}</TableCell>
+                <TableCell align="right" className="produto-item">{row.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </div>
-  )
+  );
 }
 
-export default EquipLista;
+export default ProdutoLista;
