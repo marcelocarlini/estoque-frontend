@@ -1,6 +1,6 @@
 import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField, Box } from '@mui/material'
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -30,39 +30,44 @@ function ProdutoRegistro(props) {
     { id: 8, modelo: 'MITSUSHIBA' },
   ];
 
-  React.useEffect(() => {
-    axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-categorias").then(
-      r => {
-        setCategoriaOptions(r.data.response)
-      }
-    )
-  }, [])
+  useEffect(() => {
+    axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-categorias")
+      .then(response => {
+        setCategoriaOptions(response.data.response)
+      })
+      .catch(error => {
+        console.error('Error fetching category options:', error);
+      });
+  }, []);
 
   function cadastroProduto() {
-
     if (!modelo || !n_serie || !patrimonio || !categoria || !status) {
       toast.warn('Por favor, preencha todos os campos');
       return;
     }
 
     axios.post("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/cadastro-equipamento", {
-      "modelo": modeloOptions.find(s => s.id === modelo).modelo,
+      "modelo": modeloOptions.find(item => item.id === modelo).modelo,
       "n_serie": n_serie,
       "patrimonio": patrimonio,
       "categoria": categoria,
-      "status": statusOptions.find(s => s.id === status).status
-    }).then(r => {
-
-      toast.success("Produto foi cadastrado", {
-        autoClose: 1000,
-      })
-      setModelo("");
-      setN_serie("");
-      setPatrimonio("");
-      setCategoria("");
-      setStatus("");
+      "status": statusOptions.find(item => item.id === status).status
     })
+      .then(response => {
+        toast.success("Produto foi cadastrado", {
+          autoClose: 1000,
+        });
+        setModelo("");
+        setN_serie("");
+        setPatrimonio("");
+        setCategoria("");
+        setStatus("");
+      })
+      .catch(error => {
+        console.error('Error creating product:', error);
+      });
   }
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
       <Card style={{ marginTop: '100px', width: "70%" }}>
@@ -78,11 +83,12 @@ function ProdutoRegistro(props) {
                 label="Modelo"
                 onChange={(e) => { setModelo(e.target.value) }}
               >
-                {modeloOptions.map(s => (
-                  <MenuItem value={s.id}>{s.modelo}</MenuItem>
+                {modeloOptions.map(item => (
+                  <MenuItem key={item.id} value={item.id}>{item.modelo}</MenuItem>
                 ))}
               </Select>
             </FormControl>
+
             <TextField value={n_serie} onChange={(e) => { setN_serie(e.target.value.toUpperCase()) }} style={{ marginTop: "10px" }} id="outlined-basic" label="Numero de Série" variant="outlined" />
             <TextField value={patrimonio} onChange={(e) => { setPatrimonio(e.target.value.toUpperCase()) }} style={{ marginTop: "10px" }} id="outlined-basic" label="Patrimonio" variant="outlined" />
             <FormControl style={{ marginTop: "10px" }} fullWidth>
@@ -94,11 +100,9 @@ function ProdutoRegistro(props) {
                 label="Categoria"
                 onChange={(e) => { setCategoria(e.target.value) }}
               >
-                {
-                  categoriaOptions.map(c => (
-                    <MenuItem value={c.id}>{c.nome}</MenuItem>
-                  ))
-                }
+                {categoriaOptions.map(item => (
+                  <MenuItem key={item.id} value={item.id}>{item.nome}</MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl style={{ marginTop: "10px" }} fullWidth>
@@ -110,8 +114,8 @@ function ProdutoRegistro(props) {
                 label="Status"
                 onChange={(e) => { setStatus(e.target.value) }}
               >
-                {statusOptions.map(s => (
-                  <MenuItem value={s.id}>{s.status}</MenuItem>
+                {statusOptions.map(item => (
+                  <MenuItem key={item.id} value={item.id}>{item.status}</MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -119,10 +123,9 @@ function ProdutoRegistro(props) {
           </div>
         </CardContent>
       </Card>
-      <ToastContainer
-        pauseOnHover={false} />
+      <ToastContainer pauseOnHover={false} />
     </Box>
   )
 }
 
-export default ProdutoRegistro
+export default ProdutoRegistro;
