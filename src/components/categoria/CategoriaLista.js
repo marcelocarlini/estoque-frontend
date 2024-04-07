@@ -8,7 +8,7 @@ function CategoriaLista(props) {
   const [rows, setRows] = React.useState([])
 
   React.useEffect(() => {
-    axios.get("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/listar-categorias").then(
+    axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-categorias").then(
       r => {
         setRows(r.data.response)
       }

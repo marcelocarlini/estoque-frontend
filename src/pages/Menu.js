@@ -17,6 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ProdutoRegistro from '../components/produto/ProdutoRegistro';
+import ProdutoVincular from '../components/produto/ProdutoVincular';
 import ProdutoLista from '../components/produto/ProdutoLista';
 import CategoriaRegistro from '../components/categoria/CategoriaRegistro';
 import CategoriaLista from '../components/categoria/CategoriaLista';
@@ -59,7 +60,7 @@ const AppBar = styled(MuiAppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
-    
+
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -91,8 +92,10 @@ export default function Menu() {
             return <ProdutoLista texto={"Lista de produtos"} />
         } else if (visivel === 3) {
             return <CategoriaRegistro texto={"Cadastro de categoria"} />
-        } else {
+        } else if (visivel === 4) {
             return <CategoriaLista texto={"Lista de categoria"} />
+        } else {
+            return <ProdutoVincular texto={"Vincular produto"} />
         }
     }
 
@@ -138,6 +141,15 @@ export default function Menu() {
                 </DrawerHeader>
                 <Divider />
                 <List>
+                    <ListItem onClick={() => { setVisivel(5) }} key={5} disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <Category />
+                            </ListItemIcon>
+                            <ListItemText primary={"Vincular Equipamento "} />
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider />
                     <ListItem onClick={() => { setVisivel(1) }} key={1} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>

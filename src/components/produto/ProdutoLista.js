@@ -10,7 +10,7 @@ function ProdutoLista(props) {
   const [totalPorStatus, setTotalPorStatus] = useState({});
 
   useEffect(() => {
-    axios.get("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/listar-equipamentos").then(
+    axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-equipamentos").then(
       r => {
         setRows(r.data.response);
       }

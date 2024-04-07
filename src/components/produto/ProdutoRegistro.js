@@ -31,7 +31,7 @@ function ProdutoRegistro(props) {
   ];
 
   React.useEffect(() => {
-    axios.get("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/listar-categorias").then(
+    axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-categorias").then(
       r => {
         setCategoriaOptions(r.data.response)
       }
@@ -45,7 +45,7 @@ function ProdutoRegistro(props) {
       return;
     }
 
-    axios.post("https://1ruolljjx9.execute-api.us-east-1.amazonaws.com/cadastro-equipamento", {
+    axios.post("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/cadastro-equipamento", {
       "modelo": modeloOptions.find(s => s.id === modelo).modelo,
       "n_serie": n_serie,
       "patrimonio": patrimonio,
