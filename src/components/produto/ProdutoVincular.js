@@ -64,6 +64,13 @@ function ProdutoVincular(props) {
                 // Limpar campos ou fazer outras ações após o salvamento bem-sucedido
                 setEquipamentoSelecionado(null);
                 setNomeEquipamento("");
+                axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-disponiveis")
+                    .then(response => {
+                        setEquipamentosDisponiveis(response.data.response);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar equipamentos disponíveis após vinculação:', error);
+                    });
             })
             .catch(error => {
                 console.error('Erro ao cadastrar equipamento:', error);

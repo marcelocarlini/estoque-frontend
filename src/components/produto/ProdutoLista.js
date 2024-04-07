@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControl, InputLabel, MenuItem, Select, Typography, TextField } from '@mui/material';
 import axios from 'axios';
-import '../../partials/_produtolista.scss'
+import '../../partials/_produtolista.scss';
 
 function ProdutoLista(props) {
   const [rows, setRows] = useState([]);
   const [statusFiltro, setStatusFiltro] = useState('Todos');
   const [modeloFiltro, setModeloFiltro] = useState('Todos');
   const [totalPorStatus, setTotalPorStatus] = useState({});
+  const [filtro, setFiltro] = useState("");
 
   useEffect(() => {
     axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-equipamentos").then(
@@ -39,6 +40,11 @@ function ProdutoLista(props) {
     setModeloFiltro(selectedModelo);
   };
 
+  const handleFiltroChange = (event) => {
+    const valorFiltro = event.target.value.toUpperCase();
+    setFiltro(valorFiltro);
+  };
+
   const totalPorStatusTexto = (status) => {
     let total = 0;
     if (status === "Todos") {
@@ -54,15 +60,16 @@ function ProdutoLista(props) {
 
   const modelosUnicos = [...new Set(rows.map(row => row.modelo))];
 
-  const filtro = rows.filter(row => {
-    if (statusFiltro !== "Todos" && row.status !== statusFiltro) {
-      return false;
-    }
-    if (modeloFiltro !== "Todos" && row.modelo !== modeloFiltro) {
-      return false;
-    }
-    return true;
-  });
+  const filtroResultado = rows.filter(row =>
+    (statusFiltro === "Todos" || row.status === statusFiltro) &&
+    (modeloFiltro === "Todos" || row.modelo === modeloFiltro) &&
+    (filtro === "" ||
+      row.modelo.toUpperCase().includes(filtro) ||
+      row.n_serie.toUpperCase().includes(filtro) ||
+      row.patrimonio.toUpperCase().includes(filtro) ||
+      row.nome.toUpperCase().includes(filtro) ||
+      row.status.toUpperCase().includes(filtro))
+  );
 
   return (
     <div className="produto-lista-container">
@@ -109,12 +116,22 @@ function ProdutoLista(props) {
             </Select>
           </FormControl>
         </div>
+
         {statusFiltro && (
           <Typography style={{ marginTop: '10px' }}>
             Total de equipamentos: {totalPorStatusTexto(statusFiltro)}
           </Typography>
         )}
+
       </div>
+      <TextField
+        value={filtro}
+        onChange={handleFiltroChange}
+        style={{ marginTop: "10px", width: '70%' }}
+        id="outlined-basic"
+        label="Pesquisar"
+        variant="outlined"
+      />
       <TableContainer component={Paper} className="produto-tabela">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -127,7 +144,7 @@ function ProdutoLista(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filtro.slice().reverse().map((row) => (
+            {filtroResultado.slice().reverse().map((row) => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row" className="produto-item">{row.modelo.toUpperCase()}</TableCell>
                 <TableCell align="right" className="produto-item">{row.n_serie}</TableCell>

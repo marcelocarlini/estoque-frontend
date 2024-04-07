@@ -75,7 +75,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function Menu() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [visivel, setVisivel] = React.useState(1)
+    const [visivel, setVisivel] = React.useState(5)
 
     const handleDrawerOpen = () => {
         setOpen(true);
