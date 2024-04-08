@@ -127,8 +127,8 @@ function ProdutoVincular(props) {
                                                 equipamento.n_serie.includes(filtro) ||
                                                 equipamento.patrimonio.includes(filtro)
                                             )
-                                            .map((equipamento) => (
-                                                <TableRow key={equipamento.id} onClick={() => handleRowClick(equipamento)}>
+                                            .map((equipamento, index) => (
+                                                <TableRow key={index} onClick={() => handleRowClick(equipamento)}>
                                                     <TableCell>{equipamento.modelo}</TableCell>
                                                     <TableCell>{equipamento.n_serie}</TableCell>
                                                     <TableCell>{equipamento.patrimonio}</TableCell>

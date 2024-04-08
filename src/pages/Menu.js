@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ProdutoRegistro from '../components/produto/ProdutoRegistro';
 import ProdutoVincular from '../components/produto/ProdutoVincular';
 import ProdutoLista from '../components/produto/ProdutoLista';
+import ProdutoListaVinculados from '../components/produto/ProdutoListaVinculados';
 import CategoriaRegistro from '../components/categoria/CategoriaRegistro';
 import CategoriaLista from '../components/categoria/CategoriaLista';
 import { Container } from '@mui/material';
@@ -87,15 +88,17 @@ export default function Menu() {
 
     function seletorDeComponentes() {
         if (visivel === 1) {
-            return <ProdutoRegistro texto={"Cadastro de produtos"} />
+            return <ProdutoRegistro texto={"Cadastro de novos equipamentos"} />
         } else if (visivel === 2) {
-            return <ProdutoLista texto={"Lista de produtos"} />
+            return <ProdutoLista texto={"Lista de Equipamentos Cadastrados"} />
         } else if (visivel === 3) {
-            return <CategoriaRegistro texto={"Cadastro de categoria"} />
+            return <CategoriaRegistro texto={"Cadastro de Categorias"} />
         } else if (visivel === 4) {
-            return <CategoriaLista texto={"Lista de categoria"} />
+            return <CategoriaLista texto={"Lista de Categorias"} />
+        } else if (visivel === 5) {
+            return <ProdutoVincular texto={"Vinculação"} />
         } else {
-            return <ProdutoVincular texto={"Vincular produto"} />
+            return <ProdutoListaVinculados texto={"Lista de Players Vinculados"} />
         }
     }
 
@@ -146,7 +149,15 @@ export default function Menu() {
                             <ListItemIcon>
                                 <Category />
                             </ListItemIcon>
-                            <ListItemText primary={"Vincular Equipamento "} />
+                            <ListItemText primary={"Vinculação "} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem onClick={() => { setVisivel(6) }} key={6} disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <Category />
+                            </ListItemIcon>
+                            <ListItemText primary={"Lista de Vinculados "} />
                         </ListItemButton>
                     </ListItem>
                     <Divider />
