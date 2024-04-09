@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Adicionando importação do CSS da react-toastify
 import '../../partials/_produtolista.scss';
 
 function ProdutoListaVinculados(props) {
@@ -42,9 +43,13 @@ function ProdutoListaVinculados(props) {
             data: { n_serie: selectedRow.n_serie }
         })
             .then(response => {
+                console.log("Equipamento desvinculado:", selectedRow); // Log para verificar se o equipamento foi desvinculado corretamente
                 toast.success("Equipamento desvinculado com sucesso!", {
                     autoClose: 2000,
                 });
+                // Remove o item excluído da lista
+                const updatedRows = rows.filter(row => row.n_serie !== selectedRow.n_serie);
+                setRows(updatedRows);
                 setSelectedRow(null);
                 setConfirmationDialogOpen(false);
             })
@@ -83,8 +88,8 @@ function ProdutoListaVinculados(props) {
                             <TableCell className="produto-tabela-header">Nome</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Numero de Série</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Patrimonio</TableCell>
-                            <TableCell className="produto-tabela-header">Modelo</TableCell>
-                            <TableCell className="produto-tabela-header">Ações</TableCell>
+                            <TableCell className="produto-tabela-header" align="right">Modelo</TableCell>
+                            <TableCell className="produto-tabela-header" align="right">Ações</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -96,7 +101,7 @@ function ProdutoListaVinculados(props) {
                                 <TableCell align="right" className="produto-item">{row.modelo.toUpperCase()}</TableCell>
                                 <TableCell align="right" className="produto-item">
                                     {selectedRow === row && (
-                                        <Button variant="contained" color="secondary" onClick={handleDesvincularClick}>Desvincular</Button>
+                                        <Button variant="contained" color="secondary" onClick={handleDesvincularClick} style={{ width: '50%' }}>Desvincular</Button>
                                     )}
                                 </TableCell>
                             </TableRow>
@@ -114,6 +119,7 @@ function ProdutoListaVinculados(props) {
                     <Button onClick={handleConfirmDesvincular} color="primary" autoFocus>Sim</Button>
                 </DialogActions>
             </Dialog>
+            <ToastContainer pauseOnHover={false} /> {/* Renderizando o ToastContainer */}
         </div>
     );
 }
