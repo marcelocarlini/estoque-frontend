@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Delete as DeleteIcon } from '@mui/icons-material'; // Importe o ícone de lixeira
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Adicionando importação do CSS da react-toastify
@@ -30,7 +31,8 @@ function ProdutoListaVinculados(props) {
         setSelectedRow(row);
     };
 
-    const handleDesvincularClick = () => {
+    const handleDesvincularClick = (row) => {
+        setSelectedRow(row);
         setConfirmationDialogOpen(true);
     };
 
@@ -60,6 +62,7 @@ function ProdutoListaVinculados(props) {
     };
 
     const handleCancelDesvincular = () => {
+        setSelectedRow(null);
         setConfirmationDialogOpen(false);
     };
 
@@ -82,14 +85,13 @@ function ProdutoListaVinculados(props) {
                 variant="outlined"
             />
             <TableContainer component={Paper} className="produto-tabela">
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell className="produto-tabela-header">Nome</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Numero de Série</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Patrimonio</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Modelo</TableCell>
-                            <TableCell className="produto-tabela-header" align="right">Ações</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -101,7 +103,13 @@ function ProdutoListaVinculados(props) {
                                 <TableCell align="right" className="produto-item">{row.modelo.toUpperCase()}</TableCell>
                                 <TableCell align="right" className="produto-item">
                                     {selectedRow === row && (
-                                        <Button variant="contained" color="secondary" onClick={handleDesvincularClick} style={{ width: '50%' }}>Desvincular</Button>
+                                        <DeleteIcon
+                                            style={{ color: 'purple', cursor: 'pointer', margin: '-5px' }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDesvincularClick(row);
+                                            }}
+                                        />
                                     )}
                                 </TableCell>
                             </TableRow>

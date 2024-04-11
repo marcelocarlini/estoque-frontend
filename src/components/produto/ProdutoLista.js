@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControl, InputLabel, MenuItem, Select, Typography, TextField } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControl, InputLabel, MenuItem, Select, Typography, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Edit as EditIcon } from '@mui/icons-material'; // Importe o ícone de lápis
 import axios from 'axios';
 import '../../partials/_produtolista.scss';
 
@@ -9,6 +10,9 @@ function ProdutoLista(props) {
   const [modeloFiltro, setModeloFiltro] = useState('Todos');
   const [totalPorStatus, setTotalPorStatus] = useState({});
   const [filtro, setFiltro] = useState("");
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [newStatus, setNewStatus] = useState('');
 
   useEffect(() => {
     axios.get("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/listar-equipamentos").then(
@@ -70,6 +74,44 @@ function ProdutoLista(props) {
       row.nome.toUpperCase().includes(filtro) ||
       row.status.toUpperCase().includes(filtro))
   );
+
+  const handleEditStatus = (row) => {
+    setSelectedRow(row);
+    setEditDialogOpen(true);
+  };
+
+  const handleConfirmEdit = () => {
+    if (!selectedRow || !newStatus) {
+      console.error('Erro ao confirmar a edição do status.');
+      return;
+    }
+    axios.put("https://lp7vw2q19f.execute-api.us-east-1.amazonaws.com/editar-status", {
+      id: selectedRow.id,
+      novo_status: newStatus
+    })
+      .then(response => {
+        console.log("Status editado com sucesso:", response.data);
+        setRows(rows.map(row => {
+          if (row.id === selectedRow.id) {
+            return { ...row, status: newStatus };
+          }
+          return row;
+        }));
+        setNewStatus('');
+        setSelectedRow(null);
+        setEditDialogOpen(false);
+      })
+      .catch(error => {
+        console.error('Erro ao editar status:', error);
+        setEditDialogOpen(false);
+      });
+  };
+
+  const handleCancelEdit = () => {
+    setSelectedRow(null);
+    setNewStatus('');
+    setEditDialogOpen(false);
+  };
 
   return (
     <div className="produto-lista-container">
@@ -141,6 +183,7 @@ function ProdutoLista(props) {
               <TableCell className="produto-tabela-header" align="right">Patrimonio</TableCell>
               <TableCell className="produto-tabela-header" align="right">Categoria</TableCell>
               <TableCell className="produto-tabela-header" align="right">Status</TableCell>
+              <TableCell className="produto-tabela-header" align="right">Ações</TableCell> {/* Adicionando a coluna de ações */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -151,11 +194,46 @@ function ProdutoLista(props) {
                 <TableCell align="right" className="produto-item">{row.patrimonio.toUpperCase()}</TableCell>
                 <TableCell align="right" className="produto-item">{row.nome}</TableCell>
                 <TableCell align="right" className="produto-item">{row.status}</TableCell>
+                <TableCell align="right" className="produto-item">
+                  <IconButton
+                    onClick={() => handleEditStatus(row)} // Adicionando a função de editar status
+                    aria-label="editar status"
+                    size="small"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Dialog open={editDialogOpen} onClose={handleCancelEdit}>
+        <DialogTitle>Editar Status</DialogTitle>
+        <DialogContent>
+          <Typography style={{ marginBottom: '30px' }}>Deseja realmente editar o status deste equipamento?</Typography>
+          <FormControl>
+            <InputLabel id="novo-status-label">Novo Status</InputLabel>
+            <Select
+              labelId="novo-status"
+              id="novo-status"
+              value={newStatus}
+              onChange={(e) => setNewStatus(e.target.value)}
+              label="Novo Status"
+              sx={{ width: '200px' }}
+            >
+              <MenuItem value="EM USO">Em uso</MenuItem>
+              <MenuItem value="DISPONÍVEL">Disponível</MenuItem>
+              <MenuItem value="BAIXA">Baixa</MenuItem>
+              <MenuItem value="RETORNO">Retorno</MenuItem>
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelEdit} color="primary">Cancelar</Button>
+          <Button onClick={handleConfirmEdit} color="primary" autoFocus>Confirmar</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
