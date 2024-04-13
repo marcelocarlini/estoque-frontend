@@ -1,37 +1,52 @@
+// _produtolista.scss
+
 @import "./_colors";
 
-
 .produto-lista-container {
-    margin-top: 100px;
-}
+  margin-top: 100px;
 
-.produto-lista-title {
+  .produto-lista-title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 20px;
-    
-}
+  }
 
-.produto-filtros {
+  .produto-filtros {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-}
 
-.produto-filtro {
-    display: flex;
-    flex: 1;
-    margin-right: 20px;
-}
+    .produto-filtro {
+      display: flex;
+      flex: 1;
+      margin-right: 20px;
 
-.produto-tabela {
+      .form-control {
+        margin-right: 20px;
+        width: 140px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .produto-tabela {
     margin-top: 10px;
+
+    .produto-tabela-header {
+      font-weight: bold;
+    }
+
+    .produto-item {
+      text-transform: uppercase;
+    }
+
+    .selected-row {
+      background-color: purple;
+      color: white;
+    }
+    .selected-text {
+  color: white; /* Define a cor do texto para branco */
 }
 
-.produto-tabela-header {
-    font-weight: bold;
-}
-
-.produto-item {
-    text-transform: uppercase;
+  }
 }
