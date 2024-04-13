@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material'; // Importe o ícone de lixeira
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -92,19 +92,28 @@ function ProdutoListaVinculados(props) {
                             <TableCell className="produto-tabela-header" align="right">Numero de Série</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Patrimonio</TableCell>
                             <TableCell className="produto-tabela-header" align="right">Modelo</TableCell>
+                            <TableCell className="produto-tabela-header" align="right">Ações</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {filtroResultado.map((row) => (
                             <TableRow key={row.id} onClick={() => handleRowClick(row)} className={selectedRow === row ? 'selected-row' : ''}>
-                                <TableCell className="produto-item">{row.nome}</TableCell>
-                                <TableCell align="right" className="produto-item">{row.n_serie}</TableCell>
-                                <TableCell align="right" className="produto-item">{row.patrimonio.toUpperCase()}</TableCell>
-                                <TableCell align="right" className="produto-item">{row.modelo.toUpperCase()}</TableCell>
-                                <TableCell align="right" className="produto-item">
+                                <TableCell className={`produto-item ${selectedRow === row ? 'selected-text' : ''}`}>
+                                    {row.nome}
+                                </TableCell>
+                                <TableCell align="right" className={`produto-item ${selectedRow === row ? 'selected-text' : ''}`}>
+                                    {row.n_serie}
+                                </TableCell>
+                                <TableCell align="right" className={`produto-item ${selectedRow === row ? 'selected-text' : ''}`}>
+                                    {row.patrimonio.toUpperCase()}
+                                </TableCell>
+                                <TableCell align="right" className={`produto-item ${selectedRow === row ? 'selected-text' : ''}`}>
+                                    {row.modelo.toUpperCase()}
+                                </TableCell>
+                                <TableCell align="right" className={`produto-item ${selectedRow === row ? 'selected-text' : ''}`}>
                                     {selectedRow === row && (
                                         <DeleteIcon
-                                            style={{ color: 'purple', cursor: 'pointer', margin: '-5px' }}
+                                            sx={{ color: 'white', cursor: 'pointer', margin: '-5px' }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleDesvincularClick(row);
@@ -113,6 +122,7 @@ function ProdutoListaVinculados(props) {
                                     )}
                                 </TableCell>
                             </TableRow>
+
                         ))}
                     </TableBody>
                 </Table>

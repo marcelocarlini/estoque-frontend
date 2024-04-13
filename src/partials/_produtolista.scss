@@ -1,7 +1,3 @@
-// _produtolista.scss
-
-@import "./_colors";
-
 .produto-lista-container {
   margin-top: 100px;
 
@@ -13,24 +9,27 @@
 
   .produto-filtros {
     display: flex;
+    flex-wrap: wrap; /* Para que os filtros quebrem para a próxima linha em telas menores */
     align-items: center;
     margin-bottom: 20px;
 
     .produto-filtro {
-      display: flex;
       flex: 1;
       margin-right: 20px;
+      margin-bottom: 10px;
 
       .form-control {
-        margin-right: 20px;
-        width: 140px;
+        margin-right: 0; /* Reduzir a margem para economizar espaço */
         margin-bottom: 10px;
+        width: 100%; /* Para ocupar todo o espaço disponível */
       }
     }
   }
 
   .produto-tabela {
     margin-top: 10px;
+    width: 100%; /* Garantir que a tabela ocupe 100% da largura */
+    overflow-x: auto; /* Adicionar rolagem horizontal para a tabela */
 
     .produto-tabela-header {
       font-weight: bold;
@@ -38,15 +37,41 @@
 
     .produto-item {
       text-transform: uppercase;
+      font-size: 14px; /* Tamanho de fonte menor para melhor legibilidade em telas menores */
+      padding: 8px; /* Espaçamento interno menor para melhorar a visualização em telas menores */
     }
 
     .selected-row {
       background-color: purple;
       color: white;
     }
-    .selected-text {
-  color: white; /* Define a cor do texto para branco */
-}
 
+    .selected-text {
+      color: white; /* Define a cor do texto para branco */
+    }
+  }
+
+  .produto-tabela-header,
+  .produto-item {
+    white-space: nowrap; /* Impede a quebra de texto para manter o conteúdo visível */
+    min-width: 100px; /* Define uma largura mínima para as células */
+  }
+
+  @media screen and (max-width: 768px) {
+    .produto-filtros {
+      flex-direction: column; /* Alterar para direção de coluna para facilitar a visualização em telas menores */
+    }
+
+    .produto-filtro {
+      margin-right: 0; /* Remover a margem direita para garantir espaço adequado */
+      width: 100%; /* Ocupar toda a largura disponível */
+    }
+
+    .produto-tabela {
+      .produto-tabela-header,
+      .produto-item {
+        font-size: 12px; /* Reduzir ainda mais o tamanho da fonte para telas menores */
+      }
+    }
   }
 }
