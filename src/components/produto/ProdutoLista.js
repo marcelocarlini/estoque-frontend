@@ -3,6 +3,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { Edit as EditIcon } from '@mui/icons-material';
 import axios from 'axios';
 import '../../partials/_produtolista.scss';
+import { ToastContainer, toast } from 'react-toastify';
 
 function ProdutoLista(props) {
   const [rows, setRows] = useState([]);
@@ -46,7 +47,7 @@ function ProdutoLista(props) {
   const handleModeloChange = (event) => {
     const selectedModelo = event.target.value;
     setModeloFiltro(selectedModelo);
-  };  
+  };
 
   // Função para lidar com a mudança de filtro de pesquisa
   const handleFiltroChange = (event) => {
@@ -113,6 +114,7 @@ function ProdutoLista(props) {
     })
       .then(response => {
         console.log("Status editado com sucesso:", response.data);
+
         // Atualizar o estado local dos equipamentos com o novo status
         setRows(rows.map(row => {
           if (row.id === selectedRow.id) {
@@ -123,6 +125,9 @@ function ProdutoLista(props) {
         setNewStatus('');
         setSelectedRow(null);
         setEditDialogOpen(false);
+        toast.success("Status alterado com sucesso", {
+          autoClose: 1000,
+        });
       })
       .catch(error => {
         console.error('Erro ao editar status:', error);
@@ -211,7 +216,7 @@ function ProdutoLista(props) {
               <TableCell className="produto-tabela-header" align="right">Patrimonio</TableCell>
               <TableCell className="produto-tabela-header" align="right">Categoria</TableCell>
               <TableCell className="produto-tabela-header" align="right">Status</TableCell>
-              <TableCell className="produto-tabela-header" align="right">Ações</TableCell> {/* Adicionando a coluna de ações */}
+              <TableCell className="produto-tabela-header" align="right" style={{ width: '10px' }}>Editar</TableCell> {/* Adicionando a coluna de ações */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -281,6 +286,7 @@ function ProdutoLista(props) {
           <Button onClick={handleConfirmEdit} color="primary" autoFocus>Confirmar</Button>
         </DialogActions>
       </Dialog>
+      <ToastContainer pauseOnHover={false} />
     </div>
   );
 }
