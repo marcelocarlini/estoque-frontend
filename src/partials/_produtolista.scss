@@ -56,22 +56,4 @@
     white-space: nowrap; /* Impede a quebra de texto para manter o conteúdo visível */
     min-width: 100px; /* Define uma largura mínima para as células */
   }
-
-  @media screen and (max-width: 768px) {
-    .produto-filtros {
-      flex-direction: column; /* Alterar para direção de coluna para facilitar a visualização em telas menores */
-    }
-
-    .produto-filtro {
-      margin-right: 0; /* Remover a margem direita para garantir espaço adequado */
-      width: 100%; /* Ocupar toda a largura disponível */
-    }
-
-    .produto-tabela {
-      .produto-tabela-header,
-      .produto-item {
-        font-size: 12px; /* Reduzir ainda mais o tamanho da fonte para telas menores */
-      }
-    }
-  }
 }
